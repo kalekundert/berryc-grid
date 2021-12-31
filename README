@@ -1,0 +1,73 @@
+Docs:
+- Installation instructions
+  - Require xlib, cjson: both should be in package manager
+- Command line args:
+- Env Vars
+
+Scripts:
+- generate grid geometry from screenshot
+- resize windows on monitor change
+  - could trigger this using udev.  If I write my own WM, it would be better to 
+    use dbus, I think.
+- install/echo default configs
+- convert grid position to window position; invoke berryc
+  - get workspace dimensions (from BERRY_WINDOW_STATUS)
+  - load grid spec from json (or env var, or cli)
+  - 
+
+Libraries:
+- convert grid position to real position, given workspace size
+- get current workspace
+
+Configs:
+- sxhkd config:
+  - This can be static if I provide a command that maps grid positions to 
+    berryc commands.
+
+- geometry.json
+
+Grid spec:
+  t l w h
+    
+  l:r t:b
+  - More natural to think about
+
+  Can I specify half-screen, third-screen, etc?
+
+  t=1 l=1 w=w/3 
+
+  Usage:
+    berryc-grid [-t Y] [-b Y] [-l X] [-r X] [-w W] [-h H] [-g PATH]
+
+  Options:
+    -t --top
+    -b --bottom
+    -l --left
+    -r --right
+    -w --width
+    -h --height
+    -g --geometry
+
+  Must specify complete rectangle dimensions.  Error to either over- or 
+  under-specify.
+
+  Lower-case options are specified in terms of grid coordinates; upper-case 
+  options are specified in terms of expressions.  The following variables are 
+  available to expressions:
+
+  -L, -R, -W:
+    w: total width
+    x: division coordinate
+
+  -T, -B, -H:
+    h: total height
+    y: division coordinate
+
+  Might not want to use flags: don't want to change meaning of -h.  Could use 
+  "h=..." syntax instead.  
+
+New berry features:
+- Add metadata to window.  Control when metadata is discarded, e.g. never, on 
+  move, on resize.  Or maybe just have command to discard.
+
+    
